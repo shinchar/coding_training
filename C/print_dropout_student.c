@@ -4,7 +4,7 @@
 
 #define LINE_BUF    80 //csvファイル１行の長さは80byte未満としている
 #define MAX_STUDENT 200 //HACK: 動的にメモリを確保した方がいいかもしれない
-#define MAX_NAME_SZ 8
+#define MAX_NAME_SZ 10
 
 #define DROP_SCORE  49 //落第の点数
 
@@ -50,9 +50,9 @@ int import_student_data(data_t *data, FILE *file_pointer){
 		}
 		if(f_buf[0] == '\n')break;//最後の改行だけの行は飛ばす
 
-		//f_buf ==  "ID,sub1,sub2,..."
+		//f_buf の中身例  "ID,sub1,sub2,..."
 		parse_comma = strtok(f_buf,",");
-		//parse_comma == "ID"
+		//parse_comma の中身例 "ID"
 		strcpy(data[i].name, parse_comma);
 
 		//6教科を読み込む
@@ -64,19 +64,19 @@ int import_student_data(data_t *data, FILE *file_pointer){
 						data[i].math = atoi(parse_comma);
 						break;
 					case 1:
-                        data[i].science = atoi(parse_comma);
+						data[i].science = atoi(parse_comma);
 						break;
 					case 2:
-                        data[i].english = atoi(parse_comma);
+						data[i].english = atoi(parse_comma);
 						break;
 					case 3:
-                        data[i].japanese = atoi(parse_comma);
+						data[i].japanese = atoi(parse_comma);
 						break;
 					case 4:
-                        data[i].history = atoi(parse_comma);
+						data[i].history = atoi(parse_comma);
 						break;
 					case 5:
-                        data[i].geography = atoi(parse_comma);
+						data[i].geography = atoi(parse_comma);
 					default:
 						break;
 				}
@@ -208,12 +208,7 @@ int main(int argc, char * argv[]) {
 
 	stu_cnt = import_student_data(student_data, fp);
 	fclose(fp);
-	//debug:
-	/*
-	for(int p=0; p < stu_cnt; p++){
-		printf("%d %d %d %d %d %d\n",student_data[p].math,student_data[p].science,student_data[p].english,student_data[p].japanese,student_data[p].history,student_data[p].geography);
-	}
-	*/
+
 	if(strcmp(argv[1],"dropouts") == 0){
 		//落第生表示
 		dropouts(student_data, stu_cnt);
