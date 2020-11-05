@@ -24,37 +24,39 @@ int main(void){
 	sscanf(buf,"%s\n", word);
 	length = strlen(word);
 
-	char last = word[length - 1];
-	char l_o_b = word[length -2];
+	char *last = &word[length - 1];
+	char *l_o_b = &word[length -2];
 	//esをつけるパターン
-	if( last  == 's' ||
-   	   (l_o_b == 's' && last == 'h') ||
-   	   (l_o_b == 'c' && last == 'h') ||
-        last  == 'o' ||
-        last  == 'x' )
+	if( *last  == 's' ||
+   	   (*l_o_b == 's' && *last == 'h') ||
+   	   (*l_o_b == 'c' && *last == 'h') ||
+        *last  == 'o' ||
+        *last  == 'x' )
 	{
 		strcat(word,str1);
 	}else
 	//fがvesになるパターン
-	if(last == 'f' ||
-	   (l_o_b == 'f' && last == 'e'))
-	{
-		last = '\0';
+	if(*last == 'f'){
+		*last = '\0';
+		strcat(word,str2);
+	}else
+	if(*l_o_b == 'f' && *last == 'e'){
+		*l_o_b = '\0';
 		strcat(word,str2);
 	}else
 	//yがiesになったりしたりしなかったりするパターン
-	if(last == 'y' &&
-		!(l_o_b == 'a' ||
-		   l_o_b == 'i' ||
-		   l_o_b == 'u' ||
-		   l_o_b == 'e' ||
-		   l_o_b == 'o' ))
+	if(*last == 'y' &&
+		!(*l_o_b == 'a' ||
+		   *l_o_b == 'i' ||
+		   *l_o_b == 'u' ||
+		   *l_o_b == 'e' ||
+		   *l_o_b == 'o' ))
 	{
-		last = '\0';
+		*last = '\0';
 		strcat(word,str3);
 	}else{
-		word[length] = 's';
-		word[length + 1] = '\0';
+		*(last + 1) = 's';
+		*(last + 2) = '\0';
 	}
 
 	printf("%s\n",word);
